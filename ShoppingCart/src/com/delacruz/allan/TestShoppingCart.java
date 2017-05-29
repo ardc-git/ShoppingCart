@@ -1,7 +1,5 @@
 package com.delacruz.allan;
 
-import java.text.NumberFormat;
-
 import com.delacruz.allan.cart.ShoppingCart;
 import com.delacruz.allan.model.Item;
 
@@ -11,29 +9,30 @@ public class TestShoppingCart {
 
 		ShoppingCart shoppingCart = new ShoppingCart();
 		String legitPromoCode = "I<3AMAYSIM";
-//		shoppingCart.add(Item.ULT_1GB);
-//		shoppingCart.add(Item.ULT_1GB);
-//		shoppingCart.add(Item.ULT_1GB);
+		shoppingCart.add(Item.ULT_1GB);
+		shoppingCart.add(Item.ULT_1GB);
+		shoppingCart.add(Item.ULT_1GB);
 		
-//		shoppingCart.add(Item.ULT_LARGE);
-//		shoppingCart.add(Item.ULT_LARGE);
-//		shoppingCart.add(Item.ULT_LARGE);
-//		shoppingCart.add(Item.ULT_LARGE);
+		shoppingCart.add(Item.ULT_LARGE_5GB);
+		shoppingCart.add(Item.ULT_LARGE_5GB);
+		shoppingCart.add(Item.ULT_LARGE_5GB);
+		shoppingCart.add(Item.ULT_LARGE_5GB);
 		
-		shoppingCart.add(Item.ULT_SMALL);
-		shoppingCart.add(Item.ULT_SMALL);
-		shoppingCart.add(Item.ULT_SMALL);
-		shoppingCart.add(Item.ULT_SMALL);
+		shoppingCart.add(Item.ULT_SMALL_1GB);
+		shoppingCart.add(Item.ULT_SMALL_1GB);
+		shoppingCart.add(Item.ULT_SMALL_1GB);
+		shoppingCart.add(Item.ULT_SMALL_1GB);
 		
-		shoppingCart.add(Item.ULT_MEDIUM);
-		shoppingCart.add(Item.ULT_MEDIUM);
+		shoppingCart.add(Item.ULT_MEDIUM_2GB);
+		shoppingCart.add(Item.ULT_MEDIUM_2GB);
 		
-		shoppingCart.add(Item.ULT_MEDIUM,legitPromoCode);
+		shoppingCart.add(Item.ULT_MEDIUM_2GB,legitPromoCode);
 		
 		/*for (Item item: shoppingCart.getItems()) {
 			System.out.println("Item: " + item);
 		}*/
-		shoppingCart.getItems();
+		System.out.println("Items and Freebies: " + shoppingCart.getItems());
+		System.out.println("Freebies: " + shoppingCart.getFreebies());
 		System.out.println("Total: " + shoppingCart.getTotal());
 		
 		

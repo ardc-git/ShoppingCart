@@ -1,19 +1,19 @@
 package com.delacruz.allan.model;
 
 public enum Item {
-	ULT_SMALL("ult_small","Unlimited 1GB",24.9),
-	ULT_MEDIUM("ult_medium","Unlimited 2GB",29.9),
-	ULT_LARGE("ult_large","Unlimited 5GB",44.9),
-	ULT_1GB("1gb","1 GB Data-pack",9.9);
+	ULT_SMALL_1GB("ult_small","Unlimited 1GB",24.9f),
+	ULT_MEDIUM_2GB("ult_medium","Unlimited 2GB",29.9f),
+	ULT_LARGE_5GB("ult_large","Unlimited 5GB",44.9f),
+	ULT_1GB("1gb","1 GB Data-pack",9.9f);
 	
-	private Item(String productCode, String productDescription, double price) {
+	private Item(String productCode, String productDescription, float price) {
 		this.productCode = productCode;
 		this.productDescription = productDescription;
 		this.price = price;
 	}
 	private String productCode;
 	private String productDescription;
-	private double price;
+	private float price;
 	public String getProductCode() {
 		return productCode;
 	}
@@ -26,10 +26,10 @@ public enum Item {
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
-	public double getPrice() {
+	public float getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 	

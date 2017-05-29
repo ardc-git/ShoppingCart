@@ -10,13 +10,13 @@ public enum Promo {
 	
 	private Date expirationOfPromo;
 	
-	private double discounterPricePerUnit;
+	private float discounterPricePerUnit;
 	
 	private Item freeby;
 	
 	private String promoCode;
 	
-	private double discount;
+	private float discount;
 
 	public Date getExpirationOfPromo() {
 		return expirationOfPromo;
@@ -26,11 +26,11 @@ public enum Promo {
 		this.expirationOfPromo = expirationOfPromo;
 	}
 
-	public double getDiscounterPricePerUnit() {
+	public float getDiscounterPricePerUnit() {
 		return discounterPricePerUnit;
 	}
 
-	public void setDiscounterPricePerUnit(double discounterPricePerUnit) {
+	public void setDiscounterPricePerUnit(float discounterPricePerUnit) {
 		this.discounterPricePerUnit = discounterPricePerUnit;
 	}
 
@@ -50,11 +50,11 @@ public enum Promo {
 		this.promoCode = promoCode;
 	}
 
-	public double getDiscount() {
+	public float getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(double discount) {
+	public void setDiscount(float discount) {
 		this.discount = discount;
 	}
 	

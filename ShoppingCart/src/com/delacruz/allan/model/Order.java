@@ -11,20 +11,26 @@ public class Order {
 	private Item item;
 	private int quantity;
 	private Set<Promo> promos = new HashSet<Promo>();
-	private double originalTotalPrice = 0;
-	private double discount = 0;
+	private float originalTotalPrice = 0;
+	private float discount = 0;
 	private List<Item> freebies = new ArrayList<Item>();
 	
-	public double getOriginalTotalPrice() {
+	private OrderService orderService;
+	
+	public Order() {
+		super();
+		orderService = new OrderService();
+	}
+	public float getOriginalTotalPrice() {
 		return originalTotalPrice;
 	}
-	public void setOriginalTotalPrice(double originalTotalPrice) {
+	public void setOriginalTotalPrice(float originalTotalPrice) {
 		this.originalTotalPrice = originalTotalPrice;
 	}
-	public double getDiscount() {
+	public float getDiscount() {
 		return discount;
 	}
-	public void setDiscount(double discount) {
+	public void setDiscount(float discount) {
 		this.discount = discount;
 	}
 	public List<Item> getFreebies() {
@@ -55,7 +61,7 @@ public class Order {
 	}
 	
 	public void addPromoCode(String promoCode) {
-		Promo promo = OrderService.getPromoWithCode(promoCode);
+		Promo promo = orderService.getPromoWithCode(promoCode);
 		if (promo != null) {
 			addPromo(promo);
 		}
@@ -67,7 +73,7 @@ public class Order {
 	}
 	
 	private void setPromo(Item item) {
-		addPromo(OrderService.getPromo(item));
+		addPromo(orderService.getPromo(item));
 	}
 //	private void processOrder(){
 //		OrderService.processOrder(this);

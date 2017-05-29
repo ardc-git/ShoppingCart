@@ -11,7 +11,10 @@ import com.delacruz.allan.model.Promo;
 
 public class OrderService {
 	
-	public static Promo getPromo(Item item) {
+	@SuppressWarnings("deprecation")
+	private Date promoExpDate = new Date(2017,6,24);
+	
+	public Promo getPromo(Item item) {
 		switch(item.getProductCode()) {
 			case "ult_small": return Promo.BUNDLE_3_FOR_2;
 			case "ult_large": return Promo.DISCOUNT_IF_MORETHAN_3;
@@ -20,7 +23,7 @@ public class OrderService {
 		return null;
 	}
 	
-	public static Promo getPromoWithCode(String promoCode) {
+	public Promo getPromoWithCode(String promoCode) {
 		if (promoCode.equals("I<3AMAYSIM")) {
 			return Promo.WITH_PROMO_CODE;
 		} else {
@@ -29,17 +32,17 @@ public class OrderService {
 	}
 	
 	
-	public static void processOrder(Order order){
+	public void processOrder(Order order){
 		Set<Promo> promos = order.getPromos();
 		order.setOriginalTotalPrice(order.getItem().getPrice() * order.getQuantity());
 		order.setDiscount(0);
 		for (Promo promo: promos) {
 			if(promo == Promo.BUNDLE_3_FOR_2) {
 				int itemToBeDiscounted = Math.abs(order.getQuantity()/3);
-				double discount = itemToBeDiscounted * order.getItem().getPrice();
+				float discount = itemToBeDiscounted * order.getItem().getPrice();
 				order.setDiscount(discount);
 			} else if (promo == Promo.DISCOUNT_IF_MORETHAN_3 && order.getQuantity() > 3 && !isPromoExpired(Promo.DISCOUNT_IF_MORETHAN_3)) {
-				double discountPerItem = order.getItem().getPrice() - 39.9;
+				float discountPerItem = order.getItem().getPrice() - 39.9f;
 				order.setDiscount(discountPerItem * order.getQuantity());
 			} else if (promo == Promo.FREEBIES) {
 				List<Item> freebies = new ArrayList<Item>();
@@ -50,7 +53,7 @@ public class OrderService {
 			}
 			if(promo.equals(Promo.WITH_PROMO_CODE)) {
 				//System.out.println("With Legit Promo Code: " + promo);
-				order.setDiscount(order.getDiscount() + ((order.getOriginalTotalPrice() - order.getDiscount()) * .1));
+				order.setDiscount(order.getDiscount() + ((order.getOriginalTotalPrice() - order.getDiscount()) * .1f));
 			} else {
 				//System.out.println("Not Legit Promo Code: " + promo);
 			}
@@ -58,7 +61,7 @@ public class OrderService {
 		
 	}
 	
-	private static boolean isPromoExpired(Promo promo) {
+	private boolean isPromoExpired(Promo promo) {
 		if (new Date().compareTo(promoExpDate) < 0) {
 			return false;
 		} else  {
@@ -66,9 +69,9 @@ public class OrderService {
 		}
 	}
 	
-	private static Date promoExpDate = new Date(2017,6,24);
 	
-	public static void setPromoExpDate(Date newExpDate) {
+	
+	public void setPromoExpDate(Date newExpDate) {
 		promoExpDate = newExpDate;
 	}
 

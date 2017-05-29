@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.delacruz.allan.model.Item;
 import com.delacruz.allan.model.Order;
@@ -12,10 +11,18 @@ import com.delacruz.allan.model.Promo;
 import com.delacruz.allan.service.OrderService;
 
 public class ShoppingCart {
-	private Map<Item, Order> itemsMap = new HashMap<Item, Order>();
+	private Map<Item, Order> itemsMap;
 	
 	private boolean hasPromoCodeFlag = false;
 	
+	private OrderService orderService; 
+			
+	public ShoppingCart() {
+		super();
+		itemsMap = new HashMap<Item, Order>();
+		orderService = new OrderService();
+	}
+
 	public boolean isHasPromoCodeFlag() {
 		return hasPromoCodeFlag;
 	}
@@ -41,7 +48,7 @@ public class ShoppingCart {
 		}
 		if (promoCode != null) {
 			//System.out.println("Adding promoCode: " + promoCode);
-			if (!isHasPromoCodeFlag() && Promo.WITH_PROMO_CODE.equals(OrderService.getPromoWithCode(promoCode))) {
+			if (!isHasPromoCodeFlag() && Promo.WITH_PROMO_CODE.equals(orderService.getPromoWithCode(promoCode))) {
 				setHasPromoCodeFlag(true);
 			}
 			
@@ -57,13 +64,13 @@ public class ShoppingCart {
 			Order order = this.itemsMap.get(item);
 			for (int i = 1; i <= (order.getQuantity()); i++) {
 				items.add(item);
-				System.out.println("Item: " + item);
+				//System.out.println("Item: " + item);
 			}
 			//List freebies as well
 			List<Item> freebies = order.getFreebies();
 			for (Item freeby: freebies) {
 				items.add(freeby);
-				System.out.println("Freeby: " + freeby);
+				//System.out.println("Freeby: " + freeby);
 			}
 		}
 		return items;
@@ -78,15 +85,15 @@ public class ShoppingCart {
 			List<Item> freebies = order.getFreebies();
 			for (Item freeby: freebies) {
 				items.add(freeby);
-				System.out.println("Freeby: " + freeby);
+				//System.out.println("Freeby: " + freeby);
 			}
 		}
 		return items;
 	}
 	
-	public double getTotal() {
+	public float getTotal() {
 		processCart();
-		double totalAmount = 0;
+		float totalAmount = 0;
 		for (Item item: this.itemsMap.keySet()) {
 			Order order = this.itemsMap.get(item);
 			totalAmount = totalAmount + (order.getOriginalTotalPrice() - order.getDiscount());
@@ -101,7 +108,7 @@ public class ShoppingCart {
 			if (isHasPromoCodeFlag()) {
 				order.addPromo(Promo.WITH_PROMO_CODE);
 			}
-			OrderService.processOrder(order);
+			orderService.processOrder(order);
 		}
 	}
 
