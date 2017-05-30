@@ -10,9 +10,20 @@ import com.delacruz.allan.model.Order;
 import com.delacruz.allan.model.Promo;
 import com.delacruz.allan.service.OrderService;
 
+
 public class ShoppingCart {
 	private Map<Item, Order> itemsMap;
 	
+	private Promo cartPromo;
+	
+	public Promo getCartPromo() {
+		return cartPromo;
+	}
+
+	public void setCartPromo(Promo cartPromo) {
+		this.cartPromo = cartPromo;
+	}
+
 	private boolean hasPromoCodeFlag = false;
 	
 	private OrderService orderService; 
@@ -50,6 +61,7 @@ public class ShoppingCart {
 			//System.out.println("Adding promoCode: " + promoCode);
 			if (!isHasPromoCodeFlag() && Promo.WITH_PROMO_CODE.equals(orderService.getPromoWithCode(promoCode))) {
 				setHasPromoCodeFlag(true);
+				setCartPromo(Promo.WITH_PROMO_CODE); 
 			}
 			
 		}
@@ -98,17 +110,21 @@ public class ShoppingCart {
 			Order order = this.itemsMap.get(item);
 			totalAmount = totalAmount + (order.getOriginalTotalPrice() - order.getDiscount());
 		}
+		//return ShoppingCartUtil.roundOfTwoDecimalPlaces(totalAmount);
 		return totalAmount;
 	}
 	
+	
+	//Similar to Checkout
 	private void processCart() {
 		// check if promocode was used
 		for (Item item: this.itemsMap.keySet()) {
 			Order order = this.itemsMap.get(item);
-			if (isHasPromoCodeFlag()) {
-				order.addPromo(Promo.WITH_PROMO_CODE);
-			}
 			orderService.processOrder(order);
+			if (isHasPromoCodeFlag()) {
+				float additionalDiscount = (order.getOriginalTotalPrice() - order.getDiscount()) * .1f;
+				order.setDiscount(order.getDiscount() + additionalDiscount);
+			}
 		}
 	}
 

@@ -51,12 +51,6 @@ public class OrderService {
 				}
 				order.setFreebies(freebies);
 			}
-			if(promo.equals(Promo.WITH_PROMO_CODE)) {
-				//System.out.println("With Legit Promo Code: " + promo);
-				order.setDiscount(order.getDiscount() + ((order.getOriginalTotalPrice() - order.getDiscount()) * .1f));
-			} else {
-				//System.out.println("Not Legit Promo Code: " + promo);
-			}
 		}
 		
 	}
@@ -68,8 +62,6 @@ public class OrderService {
 			return true;
 		}
 	}
-	
-	
 	
 	public void setPromoExpDate(Date newExpDate) {
 		promoExpDate = newExpDate;
